@@ -1,0 +1,10 @@
+.title {
+    color: white;
+    text-align: center;
+}
+
+.card-body {
+    background-color: #a5b1c2;
+    margin: 3px;
+    min-height: 300px;
+  }
