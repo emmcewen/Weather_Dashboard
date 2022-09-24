@@ -1,35 +1,41 @@
-
-/*dayjs.extend(window.dayjs_plugin_utc);
-dayjs.extend(window.dayjs_plugin_timezone);*/
+var apiKey = "43307f36c133c1b4d80feb3644b2ab3e";
 
 
-var cityEl = document.querySelector("#current-city")
-var searchFormEl = document.querySelector("#city-form")
-var cityHeaderEl = document.querySelector("#city-header")
-var currentWindEl=document.querySelector("#wind")
-var TempEl = document.querySelector("#temp")
-var uviEl = document.querySelector("#uvi")
-var cityHeaderCard1El = document.querySelector("#city-header-card-1")
-var forecast1EL = document.querySelector("#card-title_1")
-var forecast2EL = document.querySelector("#card-title_2")
-var forecast3EL = document.querySelector("#card-title_3")
-var forecast4EL = document.querySelector("#card-title_4")
-var forecast5EL = document.querySelector("#card-title_5")
-var card1EL = document.querySelector("#card_1")
-var card2EL = document.querySelector("#card_2")
-var card3EL = document.querySelector("#card_3")
-var card4EL = document.querySelector("#card_4")
-var card5EL = document.querySelector("#card_5")
+var inputEl=document.querySelector('input');
+var searchbtnEl= document.querySelector('.search-button');
+var citySearchEl=document.querySelector('.city-search');
 
-var api = "43307f36c133c1b4d80feb3644b2ab3e"
+var cityName= localStorage.getItem('cityNameStore');
+
+var URLWeather=`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=imperial`;
+
+var URLForecast=`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=imperial`;
+
 //step2: make an addEventListener on Submit and create displayDashboard - it shows current weather and last five day
+function recordCityData() {
+    localStorage.setItem ('cityNameStore',inputEl.value);
+}
 
+for (var i = 0; i < localStorage.length; i++) {
+    $(".city-search").append ("<p>" + localStorage.getItem(localStorage.key(i))+ "</p>");
+    
+}
+
+$.ajax ({
+    url: URLWeather,
+    method:"GET"
+})
+.then(function(response){
+
+    $('.current-city').html ("<h4>"+ response.name+ "</h4>");
+    $('.current-weather-icon').html ("<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png' >);
+    
+})
 
 function displayWeather(event) {
     event.preventDefault()
     var cityName = cityEl.value
-    var urlCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=imperial`
-
+    var urlCurrent = 
 
     fetch(urlCurrent)
         .then(function (response) {
