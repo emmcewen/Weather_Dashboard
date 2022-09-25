@@ -4,7 +4,7 @@
 
 }
 h2 {
-    color: rgb(57, 55, 55);
+    color:white;
     font-size: 35px;
     text-align: center;
 }
@@ -23,9 +23,9 @@ h2 {
 }
 
 .current-forecast {
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 .row-cards {
-    background-color: rgb(240,252,252);
+    background-color: rgb(229, 235, 235);
 }
