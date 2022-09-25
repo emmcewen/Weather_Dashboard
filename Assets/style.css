@@ -1,10 +1,31 @@
-.title {
-    color: white;
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+h2 {
+    color: rgb(57, 55, 55);
+    font-size: 35px;
     text-align: center;
 }
 
-.card-body {
-    background-color: #a5b1c2;
-    margin: 3px;
-    min-height: 300px;
-  }
+#search-section {
+    background-color: rgb (240, 252, 252);
+}
+
+.city {
+    border:none;
+
+}
+.city-card {
+    border: none;
+
+}
+
+.current-forecast {
+    padding-bottom: 40px;
+}
+
+.row-cards {
+    background-color: rgb(240,252,252);
+}

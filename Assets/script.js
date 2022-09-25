@@ -1,23 +1,21 @@
 var apiKey = "43307f36c133c1b4d80feb3644b2ab3e";
 
-
 var inputEl = document.querySelector('input');
-var searchbtnEl = document.querySelector('.search-button');
-var citySearchEl = document.querySelector('.city-search');
+var searchBtnEl = document.querySelector('.search-button');
+var citySearchEl = document.querySelector('.history');
 
 var cityName = localStorage.getItem('cityNameStore');
 
-var URLWeather = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=imperial`;
+var URLWeather = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`;
 
-var URLForecast = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=imperial`;
+var URLForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`;
 
-//step2: make an addEventListener on Submit and create displayDashboard - it shows current weather and last five day
 function recordCityData() {
     localStorage.setItem('cityNameStore', inputEl.value);
 }
 
 for (var i = 0; i < localStorage.length; i++) {
-    $(".city-search").append("<p>" + localStorage.getItem(localStorage.key(i)) + "</p>");
+    $(".history").append("<p>" + localStorage.getItem(localStorage.key(i)) + "</p>");
 
 }
 
@@ -26,16 +24,16 @@ $.ajax({
     method: "GET"
 })
     .then(function (response) {
-
-        $('.current-city').html("<h4>" + response.name + "</h4>");
-        $('.current-weather-icon').html("<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
-        $('.current-humidity').text("Humidity:" + response.main.humidity + "%");
-        $('.current-wind').text("Wind Speed:" + response.wind.speed + "MPH");
-        $('current-temperature').text("Temperature:" + response.main.temp + "F");
+//current weather
+        $('.city').html("<h4>" + response.name + "</h4>");
+        $('.weather-icon').html("<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
+        $('.humidity').text("Humidity:" + response.main.humidity + "%");
+        $('.wind').text("Wind Speed:" + response.wind.speed + "MPH");
+        $('.temperature').text("Temperature:" + response.main.temp + "F");
 
         var lat = response.coord.lat;
         var lon = response.coord.lon;
-        var queryURLv = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + apiKey;
+        var queryURLUv = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + apiKey;
 
         $.ajax({
             url: queryURLUv,
@@ -44,15 +42,21 @@ $.ajax({
             .then(function (response) {
                 var uvValue = response.value
 
-                $('.current-uv-index')("UV Index:" + response.value);
-                $('.current-uv-index').css("background-color", uvColor(uvValue));
+                $('.uv').text("UV Index:" + response.value);
+                $('.uv').css("background-color", uvColor(uvValue));
             });
     });
 
 function uvColor(uvValue, colorbgd) {
     var colorbgd = "";
     if (uvValue <= 2) {
-        colorbgd = "#ffbb00"
+        colorbgd = "#66ff00"
+    }
+    else if (uvValue <= 5 && uvValue >2){
+        colorbgd="#ffbb00";
+    }
+    else if (uvValue <= 6 && uvValue >5){
+        colorbgd="#FF0000"
     }
     return colorbgd;
 
@@ -104,7 +108,7 @@ $.ajax({
 
     });
 
-searchbtnEL.addEventListener("click", recordCityData);
+searchBtnEL.addEventListener('click', recordCityData);
 
 
 
