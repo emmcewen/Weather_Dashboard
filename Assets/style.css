@@ -8,9 +8,14 @@ h2 {
     font-size: 35px;
     text-align: center;
 }
+h5 {
+    color:black;
+    font-size: 25px;
+    text-align: center;
+}
 
 #search-section {
-    background-color: rgb (240, 252, 252);
+    background-color:white;
 }
 
 .city {
@@ -19,13 +24,34 @@ h2 {
 }
 .city-card {
     border: none;
-
 }
 
 .current-forecast {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .row-cards {
-    background-color: rgb(229, 235, 235);
+    background-color:aliceblue;
 }
+.row {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.col-md-2 {
+    -ms-flex: 0 0 17%;
+    flex: 0 0 17%;
+    max-width: 20%;
+}
+
+
+@media screen and (max-width: 600px) {
+    div.col-md-8 {
+      display: none;
+    }
+  }

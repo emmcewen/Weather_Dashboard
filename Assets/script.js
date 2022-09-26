@@ -2,15 +2,16 @@ var apiKey = "43307f36c133c1b4d80feb3644b2ab3e";
 
 var inputEl = document.querySelector('input');
 var searchBtnEl = document.querySelector('.search-button');
-var citySearchEl = document.querySelector('.history');
+var citySearchEl = document.querySelector('.search-history');
 
 var cityName = localStorage.getItem('cityNameStore');
 cityName="Cleveland";
+
 var URLWeather = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`;
 
 var URLForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`;
 
-function recordCityData() {
+function cityDataStorage() {
     localStorage.setItem('cityNameStore', inputEl.value);
 }
 
@@ -25,40 +26,40 @@ $.ajax({
 })
     .done(function (response) {
 //current weather
-        $('.city').html("<h4>" + response.name + "</h4>");
-        $('.weather-icon').html("<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
-        $('.humidity').text("Humidity:" + response.main.humidity + "%");
-        $('.wind').text("Wind Speed:" + response.wind.speed + "MPH");
-        $('.temperature').text("Temperature:" + response.main.temp + "F");
+        $('.current-city').html("<h4>" + response.name + "</h4>");
+        $('.current-weather-icon').html("<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
+        $('.current-humidity').text("Humidity:" + response.main.humidity + "%");
+        $('.current-wind').text("Wind Speed:" + response.wind.speed + "MPH");
+        $('.current-temperature').text("Temperature:" + response.main.temp + "F");
 
         var lat = response.coord.lat;
         var lon = response.coord.lon;
-        var queryURLUv = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + apiKey;
+        var URLUv = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + apiKey;
 
         $.ajax({
-            url: queryURLUv,
+            url: URLUv,
             method: "GET"
         })
             .done(function (response) {
                 var uvValue = response.value
 
-                $('.uv').text("UV Index:" + response.value);
-                $('.uv').css("background-color", uvColor(uvValue));
+                $('.current-uv-index').text("UV Index:" + response.value);
+                $('.current-uv-index').css("background-color", uvColor(uvValue));
             });
     });
 
-function uvColor(uvValue, colorbgd) {
-    var colorbgd = "";
+function uvColor(uvValue, bgColor) {
+    var bgColor = "";
     if (uvValue <= 2) {
-        colorbgd = "#66ff00"
+        bgColor = "#28B463" //green
     }
     else if (uvValue <= 5 && uvValue >2){
-        colorbgd="#ffbb00";
+        bgColor="#FFC300"; //yellow
     }
     else if (uvValue <= 6 && uvValue >5){
-        colorbgd="#FF0000"
+        bgColor="#C70039"//red
     }
-    return colorbgd;
+    return bgColor;
 
 }
 
@@ -109,7 +110,7 @@ $.ajax({
 
     });
 
-searchBtnEl.addEventListener('click', recordCityData);
+searchBtnEl.addEventListener('click', cityDataStorage);
 
 
 
